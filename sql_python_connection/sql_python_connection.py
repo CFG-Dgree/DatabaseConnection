@@ -19,6 +19,16 @@ class DbConnectionError:
     pass
 
 
+def calc_commission(sold_items, commission):
+    sales = []
+
+    for item in sold_items:
+        sales.append(item[6])
+
+    commission = sum(sales) * (commission / 100)
+    return commission
+
+
 def get_all_records():
     try:
         db_name = 'tests'
@@ -58,6 +68,8 @@ def get_all_records_with_rep(repName):
             print(i)
         cur.close()
 
+        comp = round(calc_commission(results, commission=10), 2)
+
     except Exception:
         raise DbConnectionError("Failed to read data from DB")
 
@@ -65,6 +77,8 @@ def get_all_records_with_rep(repName):
         if (db_connection):
             db_connection.close()
             print("Connection Closed Successfully")
+
+    print("Commission for {} is £{}".format(repName, comp))
 
 
 def insert_new_record(record):
@@ -110,9 +124,9 @@ record = {
 
 def main():
     # get_all_records()
-    # get_all_records_with_rep("Jones")
-    insert_new_record(record)
-    get_all_records_with_rep("Mohana")
+    get_all_records_with_rep("Jones")
+    # insert_new_record(record)
+    # get_all_records_with_rep("Mohana")
 
 
 if __name__ == '__main__':
