@@ -45,7 +45,7 @@ def get_all_records():
         cur.close()
 
     except Exception:
-        raise DbConnectionError("Failed to read data from DB")
+        raise DbConnectionError("Failed to read data from DB.")
 
     finally:
         if (db_connection):
